@@ -1,3 +1,7 @@
+## ✅ ZPay CI Status
+
+[![CI](https://github.com/cedricheijlman/zpay/actions/workflows/ci.yml/badge.svg)](https://github.com/cedricheijlman/zpay/actions)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

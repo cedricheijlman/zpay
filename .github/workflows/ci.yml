@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
-          cache: "npm"
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -39,9 +39,8 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_TEAM_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: "--prod"
+          vercel-args: '--prod'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: ./
-          alias-domains: ""
+          alias-domains: ''
           github-comment: true
-          prod: ${{ github.ref == 'refs/heads/main' }}

@@ -1,0 +1,55 @@
+name: CI & Deploy
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+jobs:
+  build:
+    name: Lint, Test, Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Run tests (if available)
+        run: npm run test --if-present
+
+      - name: Build the application
+        run: npm run build
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_TEAM_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: ./
+          alias-domains: >-
+            ${{
+              github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'staging'
+              && 'zpay-staging.vercel.app'
+              || github.ref == 'refs/heads/staging'
+              && 'zpay-staging.vercel.app'
+              || github.ref == 'refs/heads/main'
+              && 'zpay.vercel.app'
+              || ''
+              }}
+          github-comment: true

@@ -42,5 +42,14 @@ jobs:
           vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: ./
-          alias-domains: ${{ github.ref == 'refs/heads/staging' && 'zpay-staging.vercel.app' || github.ref == 'refs/heads/main' && 'zpay.vercel.app' || '' }}
+          alias-domains: >-
+            ${{
+              github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'staging'
+              && 'zpay-staging.vercel.app'
+              || github.ref == 'refs/heads/staging'
+              && 'zpay-staging.vercel.app'
+              || github.ref == 'refs/heads/main'
+              && 'zpay.vercel.app'
+              || ''
+              }}
           github-comment: true

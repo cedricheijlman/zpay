@@ -13,8 +13,7 @@ import { Loader2 } from 'lucide-react';
 import { loginSchema, LoginSchema } from '@/lib/schemas/loginSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { fetcher } from '@/lib/api/fetcher';
-import { toast } from 'sonner';
+import { useLogin } from '@/lib/hooks/useLogin';
 
 function LoginForm() {
   const {
@@ -34,23 +33,11 @@ function LoginForm() {
   const remember = watch('rememberMe'); // kijkt wat de huidige waarde is
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const { login, loading } = useLogin();
 
   const onSubmit = async (data: LoginSchema) => {
-    try {
-      setLoading(true);
-      await fetcher('/api/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ ...data }),
-        csrf: true,
-      });
-      // ✅ Na succesvolle login: redirect
-      window.location.href = '/dashboard';
-    } catch (err: any) {
-      toast.error(err?.error);
-    } finally {
-      setLoading(false);
-    }
+    await login(data);
   };
 
   return (

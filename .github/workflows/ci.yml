@@ -33,6 +33,20 @@ jobs:
       - name: Build the application
         run: npm run build
 
+        # 🧪 Fase 2: Playwright E2E tests
+      - name: 🎭 Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: 🧪 Run Playwright E2E tests
+        run: npx playwright test --reporter=html
+
+      - name: 📊 Upload Playwright HTML Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report/
+
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:

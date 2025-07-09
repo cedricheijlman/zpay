@@ -1,5 +1,9 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 export default function Home() {
-  return <div className="">SETUP</div>;
+  return (
+    <div className="">
+      <h1 className="text-3xl font-bold text-red-500">dd</h1>
+    </div>
+  );
 }

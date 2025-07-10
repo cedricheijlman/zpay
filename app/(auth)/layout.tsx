@@ -4,7 +4,10 @@ import { EnsureCsrfToken } from '../components/EnsureCsrfToken';
 
 function AuthLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
+    <main
+      role="main"
+      className="flex min-h-screen w-full flex-col items-center justify-center bg-gray-50 px-4 py-8 sm:px-6 lg:px-8"
+    >
       <div className="mb-6 flex flex-col items-center sm:mb-8">
         <Image
           src="/images/logos/zpay-logo.png"
